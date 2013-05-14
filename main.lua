@@ -9,9 +9,9 @@ function love.load()
 	i = love.graphics.newImage("spritemap.png")
 	sprite = SpriteSheet:new{image = i} 
 	local palatte = {
-		love.graphics.newQuad(0,0,32,32,1024,1024), 
-		love.graphics.newQuad(32,0,32,32,1024,1024), 
-		love.graphics.newQuad(64,0,32,32,1024,1024)
+		{love.graphics.newQuad(0,0,32,32,1024,1024)}, 
+		{love.graphics.newQuad(32,0,32,32,1024,1024)}, 
+		{love.graphics.newQuad(64,0,32,32,1024,1024)}
 	}
 	sprite:loadSpritePalatte("map",palatte)
 	local sm = {
