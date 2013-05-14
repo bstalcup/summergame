@@ -37,3 +37,6 @@ function Map:updateView(x,y)
 		end
 	end
 end
+
+function Map:update(mouse, keyboard)
+end

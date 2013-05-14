@@ -50,12 +50,11 @@ function SpriteSheet:draw()
 		for key in pairs(self.sprites) do
 			sprite = self.sprites[key]
 			for i,sprite in ipairs(sprite) do
-				print(i)
 				self.batch:addq(sprite.quad,sprite.x,sprite.y)
 			end
 		end
 		self.batch:unbind()
 	end
-	love.graphics.draw(self.batch,0,0)
+	love.graphics.draw(self.batch,10,10)
 	love.graphics.print("Hello World",0,0)
 end
