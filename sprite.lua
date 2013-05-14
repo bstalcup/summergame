@@ -50,24 +50,30 @@ end
 
 function Sprite:getQuad()
 	if self.action == nil then
-		self.aciton = "default"
+		self.action = "default"
+	end
+	if self.frameCount == nil then
+		self.frameCount = 1
 	end
 	return self.frames[self.action].frames[self.frameCount]
 end
 
 function Sprite:update(dt)
 	if self.frameCount == nil then
-		self.frameCount = 0
+		self.frameCount = 1
 	end
 	if self.timeElapsed == nil then 
 		self.timeElapsed = 0
 	end
+
 	self.timeElapsed = self.timeElapsed + dt
+	--print(self.timeElapsed,self.frameTime,dt)
 	if self.timeElapsed > self.frameTime then
 		self.timeElapsed = 0
 		self.frameCount = self.frameCount + 1
-		if self.frameCount > #self.frames[self.action] then
-			self.action = self.frames[self.action] = self.frames[self.action].target
+		if self.frameCount > #self.frames[self.action].frames then
+			self.action = self.frames[self.action].target
+			self.frameCount = 1
 		end
 	end
 end

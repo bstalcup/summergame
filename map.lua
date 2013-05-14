@@ -24,7 +24,7 @@ function Map:loadSpriteMap(spritemap, mapkey)
 	for x,_ in ipairs(spritemap) do
 		local row = {}
 		for y,val in ipairs(_) do 
-			local sprite = spritesheet:makeSprite(mapkey[val])
+			local sprite = self.spritesheet:makeSprite(mapkey[val])
 			sprite:setPosition((x-1)*self.size, (y-1)*self.size)
 			table.insert(row,sprite)
 		end
@@ -32,7 +32,7 @@ function Map:loadSpriteMap(spritemap, mapkey)
 end
 
 function Map:setView(nx,ny)
-	for x,row in ipairs(spritemap) do 
+	for x,row in ipairs(self.spritemap) do 
 		for y,sprite in ipairs(row) do
 			if x >= nx and y >= ny and x < nx + self.width and y < ny + self.height then
 				sprite:setVsible(false)

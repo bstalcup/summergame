@@ -3,17 +3,10 @@ require "spritesheet"
 
 local map
 local sprite
-local i
+local i,r
 
 function love.load()
-	i = love.graphics.newImage("spritemap.png")
-	sprite = SpriteSheet:new{image = i} 
-	local palatte = {
-		{love.graphics.newQuad(0,0,32,32,1024,1024)}, 
-		{love.graphics.newQuad(32,0,32,32,1024,1024)}, 
-		{love.graphics.newQuad(64,0,32,32,1024,1024)}
-	}
-	sprite:loadSpritePalatte("map",palatte)
+	sprite = loadSS()
 	local sm = {
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, -- 1
 		{1, 2, 2, 2, 2, 2, 2, 2, 2, 1}, -- 2
@@ -29,11 +22,21 @@ function love.load()
 	map = Map:new{width = 10, height = 10, size = 32}
 	
 	map:loadSpriteSheet(sprite)
-	map:loadSpriteMap(sm, "map")
+	map:loadSpriteMap(sm, {"grass","water"})
 
 	map:setView(1,1)
+	r = 0
 end
 
 function love.draw()
+	love.graphics.setColor(r,0,0)
+	r = r + 1
+	love.graphics.rectangle("fill",0,0,800,600)
+	
+	love.graphics.setColor(255,255,255)
 	sprite:draw()
+end
+
+function love.update(dt)
+	sprite:update(dt)
 end
