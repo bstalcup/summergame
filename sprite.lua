@@ -9,10 +9,14 @@ end
 
 --example frames
 --{
---	default={
+--	default = {
 --		frames  = {Quads}
---		looping = true 	
+--		target = "default"
 --	}	
+--	jump = {
+--		frames = {Quads}
+--		target = "default"
+--	}
 --}
 
 function Sprite:loadFrames(frames)
@@ -28,6 +32,10 @@ function Sprite:setPosition(x,y)
 	self.y = y
 end
 
+function Sprite:setVisibility(visible)
+	self.visible = visible
+end
+
 function Sprite:getX() 
 	return self.x
 end
@@ -36,25 +44,20 @@ function Sprite:getY()
 	return self.y
 end
 
+function Sprite:isVisible()
+	return self.visible
+end
+
 function Sprite:getQuad()
 	if self.action == nil then
 		self.aciton = "default"
 	end
-	local thisAction = self.frames[self.action].frames
-	return self.frames[self.action].frames[self.frameCount % #thisAction]
+	return self.frames[self.action].frames[self.frameCount]
 end
 
 function Sprite:update(dt)
 	if self.frameCount == nil then
 		self.frameCount = 0
-	end
-	if self.frameMax == nil then
-		self.frameMax = 0
-		for key in pairs(self.frames) do
-			if #self.frames[key].frames > self.frameMax then
-				self.frameMax = #self.frames[key].frames
-			end
-		end
 	end
 	if self.timeElapsed == nil then 
 		self.timeElapsed = 0
@@ -62,6 +65,9 @@ function Sprite:update(dt)
 	self.timeElapsed = self.timeElapsed + dt
 	if self.timeElapsed > self.frameTime then
 		self.timeElapsed = 0
-		self.frameCount = (self.frameCount + 1) % self.frameMax
+		self.frameCount = self.frameCount + 1
+		if self.frameCount > #self.frames[self.action] then
+			self.action = self.frames[self.action] = self.frames[self.action].target
+		end
 	end
 end

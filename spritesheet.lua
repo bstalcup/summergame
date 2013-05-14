@@ -17,7 +17,7 @@ function SpriteSheet:addFrames(key,frames)
 end
 
 function SpriteSheet:makeSprite(key)
-	local s = Sprite:new()
+	local s = Sprite:new{frameTime=250}
 	s:loadFrames(self.frames[key])
 	if self.sprites == nil then
 		self.sprites = {}
@@ -28,7 +28,9 @@ end
 
 function SpriteSheet:draw()
 	for i,sprite in ipairs(self.sprite) do
-		love.grapics.draw(sprite:getQuad(), sprite:getX(), sprite:getY())
+		if sprite:isVisible() then
+			love.grapics.draw(sprite:getQuad(), sprite:getX(), sprite:getY())
+		end
 	end
 end
 
@@ -37,3 +39,5 @@ function SpriteSheet:update(dt)
 		sprite:update(dt)
 	end
 end
+
+

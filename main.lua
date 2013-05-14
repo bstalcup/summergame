@@ -31,7 +31,7 @@ function love.load()
 	map:loadSpriteSheet(sprite)
 	map:loadSpriteMap(sm, "map")
 
-	map:updateView(1,1)
+	map:setView(1,1)
 end
 
 function love.draw()

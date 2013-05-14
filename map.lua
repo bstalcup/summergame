@@ -15,28 +15,33 @@ function Map:loadCollisionMap(col)
 	self.col = col
 end
 
-function Map:loadSpriteSheet(ss)
-	self.ss = ss
+function Map:loadSpriteSheet(spritesheet)
+	self.spritesheet = spritesheet
 end
 
-function Map:loadSpriteMap(sm, pk) 
-	self.sm = sm
-	self.pk = pk
+function Map:loadSpriteMap(spritemap, mapkey) 
+	self.spritemap = {}
+	for x,_ in ipairs(spritemap) do
+		local row = {}
+		for y,val in ipairs(_) do 
+			local sprite = spritesheet:makeSprite(mapkey[val])
+			sprite:setPosition((x-1)*self.size, (y-1)*self.size)
+			table.insert(row,sprite)
+		end
+	end
 end
 
-function Map:updateView(x,y)
-	self.ss:clearSpritesForKey("map")
-	for tx = x , (x-1+self.width) do
-		for ty = y , (y-1+self.height) do
-			local rx = (tx - x) * self.size
-			local ry = (ty - y) * self.size
-			if self.sm[tx] and self.sm[tx][ty] then 
-				local val = self.sm[tx][ty]
-				self.ss:addSpriteForKey("map", val, rx, ry, self.pk)
+function Map:setView(nx,ny)
+	for x,row in ipairs(spritemap) do 
+		for y,sprite in ipairs(row) do
+			if x >= nx and y >= ny and x < nx + self.width and y < ny + self.height then
+				sprite:setVsible(false)
+			else
+				sprite:setVisible(true)
 			end
 		end
 	end
 end
 
-function Map:update(mouse, keyboard)
+function Map:update(mouse, keyboard, dt)
 end
