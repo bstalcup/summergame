@@ -6,7 +6,7 @@ local sprite
 local i
 
 function love.load()
-	i = love.graphics.newImage("spritemaptest.png")
+	i = love.graphics.newImage("spritemap.png")
 	sprite = SpriteSheet:new{image = i} 
 	local palatte = {
 		love.graphics.newQuad(0,0,32,32,1024,1024), 
