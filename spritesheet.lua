@@ -1,12 +1,13 @@
 SpriteSheet = {}
 
-function SpriteSheet.new(o)
+function SpriteSheet:new(o)
 	local m = o or {}
-	setmetatable(m,Map)
+	setmetatable(m,SpriteSheet)
+	self.__index = self
 	return m
 end
 
-function SpriteSheet.loadSpritePalatte(key, palatte)
+function SpriteSheet:loadSpritePalatte(key, palatte)
 	if self.palattes == nil then
 		self.palattes = {}
 	end
@@ -14,7 +15,7 @@ function SpriteSheet.loadSpritePalatte(key, palatte)
 end
 
 
-function SpriteSheet.addSpriteForKey(key, quad, x, y, pk)
+function SpriteSheet:addSpriteForKey(key, quad, x, y, pk)
 	self.update = true 
 	local sprite = {}
 	local palatte = pk or key
@@ -30,26 +31,31 @@ function SpriteSheet.addSpriteForKey(key, quad, x, y, pk)
 	table.insert(self.sprites[key],sprite)
 end
 
-function SpriteSheet.clearSpritesForKey(key)
+function SpriteSheet:clearSpritesForKey(key)
 	self.update = true
 	if self.sprites ~= nil and self.sprites[key] ~= nil then
 		self.sprites[key] = nil
 	end
 end
 
-function SpriteSheet.draw()
+function SpriteSheet:draw()
 	if self.batch == nil then
 		self.batch = love.graphics.newSpriteBatch(self.image)
 		self.update = true
 	end
 	if self.update then
-		batch.bind()
+		self.batch:bind()
 		self.update = false
-		for key,sprites in ipairs(self.sprites) do
+		print(#self.sprites)
+		for key in pairs(self.sprites) do
+			sprite = self.sprites[key]
 			for i,sprite in ipairs(sprite) do
-				batch:addq(sprite.quad,sprite.x,sprite.y)
+				print(i)
+				self.batch:addq(sprite.quad,sprite.x,sprite.y)
 			end
 		end
-		batch.unbind()
+		self.batch:unbind()
 	end
+	love.graphics.draw(self.batch,0,0)
+	love.graphics.print("Hello World",0,0)
 end
