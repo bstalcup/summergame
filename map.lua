@@ -35,27 +35,36 @@ end
 
 function Map:setView(nx,ny)
 
-	self.vx = nx
-	self.vy = ny
+	if nx < -5 then nx = -5 end
+	if ny < -5 then ny = -5 end
+	if nx > #self.spritemap - self.height + 5 then nx = #self.spritemap - self.height + 5 end
+	if ny > #self.spritemap[1] - self.width + 5 then ny = #self.spritemap[1] - self.height + 5 end
 
-	print(self.width,self.height)
-	for x,row in ipairs(self.spritemap) do 
-		for y,sprite in ipairs(row) do
-			if x >= nx and y >= ny and x < nx + self.width and y < ny + self.height then
-				sprite:setVisible(true)
-			else
-				sprite:setVisible(false)
+	if self.vx ~= nx or self.vy ~= ny then
+		self.vx = nx
+		self.vy = ny
+
+		for x,row in ipairs(self.spritemap) do 
+			for y,sprite in ipairs(row) do
+				if x >= nx and y >= ny and x < nx + self.width and y < ny + self.height then
+					sprite:setVisible(true)
+					sprite:setPosition((x-nx)*self.size,(y-ny)*self.size)
+				else
+					sprite:setVisible(false)
+				end
 			end
 		end
 	end
 end
 
 function Map:update(mouse, keyboard, dt)
+
 	if self.timeElapsed == nil then
 		self.timeElapsed = 0
 	end
 	self.timeElapsed = self.timeElapsed + dt
 	if self.timeElapsed > self.frameDelay then
+		self.timeElapsed = 0
 
 		local dx = 0
 		local dy = 0
