@@ -97,6 +97,24 @@ function loadMisc()
 end
 
 
+function loadEffects()
+	local ss = SpriteSheet:new{image = love.graphics.newImage("spriteterrain.png"), frameTime=.1}
+	ss:addFrames("explosion",
+			default = {
+				frames = {
+						love.graphics.newQuad( 0, 0, 32, 32, 1024, 1024 ),
+						love.graphics.newQuad( 0, 32, 32, 32, 1024, 1024 ),
+						love.graphics.newQuad( 0, 64, 32, 32, 1024, 1024 ),
+						love.graphics.newQuad( 0, 96, 32, 32, 1024, 1024 ),
+						love.graphics.newQuad( 0, 128, 32, 32, 1024, 1024 ),
+						love.graphics.newQuad( 0, 160, 32, 32, 1024, 1024 )
+				},
+				target= "default"
+			}
+		)
+end
+
+
 function loadTerrain()
 	local ss = SpriteSheet:new{image = love.graphics.newImage("spriteterrain.png"), frameTime=.1}
 	ss:addFrames("grass",{
