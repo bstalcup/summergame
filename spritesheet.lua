@@ -47,6 +47,19 @@ function SpriteSheet:update(dt)
 	end
 end
 
+function loadMisc()
+	local ss = SpriteSheet:new{image = love.graphics.newImage("spritemeta.png"), frameTime=.1}
+	ss:addFrames("cursor",{
+			default = {
+				frames = {
+					love.graphics.newQuad(0,0,32,32,1024,1024),
+					love.graphics.newQuad(32,0,32,32,1024,1024)
+				}
+				target = "default"
+			}
+		})
+end
+
 function loadTerrain()
 	local ss = SpriteSheet:new{image = love.graphics.newImage("spriteterrain.png"), frameTime=.1}
 	ss:addFrames("grass",{
