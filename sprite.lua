@@ -32,7 +32,7 @@ function Sprite:setPosition(x,y)
 	self.y = y
 end
 
-function Sprite:setVisibility(visible)
+function Sprite:setVisible(visible)
 	self.visible = visible
 end
 
@@ -64,6 +64,9 @@ function Sprite:update(dt)
 	end
 	if self.timeElapsed == nil then 
 		self.timeElapsed = 0
+	end
+	if self.action == nil then 
+		self.action = "default"
 	end
 
 	self.timeElapsed = self.timeElapsed + dt

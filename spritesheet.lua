@@ -33,7 +33,9 @@ function SpriteSheet:draw()
 	self.batch:clear()
 	self.batch:bind()
 	for i,sprite in ipairs(self.sprites) do
-		self.batch:addq(sprite:getQuad(), sprite:getX(), sprite:getY())
+		if(sprite:isVisible()) then
+			self.batch:addq(sprite:getQuad(), sprite:getX(), sprite:getY())
+		end
 	end
 	self.batch:unbind()
 	love.graphics.draw(self.batch,12,16)
@@ -45,8 +47,8 @@ function SpriteSheet:update(dt)
 	end
 end
 
-function loadSS()
-	local ss = SpriteSheet:new{image = love.graphics.newImage("spritemap.png"), frameTime=.1}
+function loadTerrain()
+	local ss = SpriteSheet:new{image = love.graphics.newImage("spriteterrain.png"), frameTime=.1}
 	ss:addFrames("grass",{
 			default = {
 				frames = {
