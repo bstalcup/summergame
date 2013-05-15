@@ -2,7 +2,11 @@ require "map"
 require "spritesheet"
 
 local map
+
+--spritesheets
 local terrain
+local units
+local misc
 
 local keyboard
 local mouse
@@ -12,6 +16,7 @@ function love.load()
 	keyboard = {}
 
 	terrain = loadTerrain()
+	misc = loadMisc()
 
 	local sm = {}
 	for r = 1, 30 do

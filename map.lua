@@ -58,30 +58,31 @@ function Map:setView(nx,ny)
 end
 
 function Map:update(mouse, keyboard, dt)
-
-	if self.timeElapsed == nil then
-		self.timeElapsed = 0
-	end
-	self.timeElapsed = self.timeElapsed + dt
-	if self.timeElapsed > self.frameDelay then
-		self.timeElapsed = 0
-
-		local dx = 0
-		local dy = 0
-
-		if mouse.x < 100 and mouse.x > 0 then
-			dx = -1
+	if mouse.x < 100 or mouse.x > 700 or mouse.y < 100 or mouse.y > 500 then 
+		if self.timeElapsed == nil then
+			self.timeElapsed = 0
 		end
-		if mouse.x > 700 and mouse.x < 800 then
-			dx = 1
-		end
-		if mouse.y < 100 and mouse.y > 0 then
-			dy = -1
-		end
-		if mouse.y > 500 and mouse.y < 600 then
-			dy = 1
-		end
+		self.timeElapsed = self.timeElapsed + dt
+		if self.timeElapsed > self.frameDelay then
+			self.timeElapsed = 0
 
-		self:setView(self.vx + dx, self.vy + dy)
+			local dx = 0
+			local dy = 0
+
+			if mouse.x < 100 and mouse.x > 0 then
+				dx = -1
+			end
+			if mouse.x > 700 and mouse.x < 800 then
+				dx = 1
+			end
+			if mouse.y < 100 and mouse.y > 0 then
+				dy = -1
+			end
+			if mouse.y > 500 and mouse.y < 600 then
+				dy = 1
+			end
+
+			self:setView(self.vx + dx, self.vy + dy)
+		end
 	end
 end
