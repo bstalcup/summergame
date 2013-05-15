@@ -24,6 +24,7 @@ function Sprite:loadFrames(frames)
 end
 
 function Sprite:setAction(action)
+	self.frameCount = 1
 	self.action = action
 end
 
@@ -49,6 +50,7 @@ function Sprite:isVisible()
 end
 
 function Sprite:getQuad()
+	print(self.action, self.frameCount)
 	if self.action == nil then
 		self.action = "default"
 	end
@@ -70,7 +72,6 @@ function Sprite:update(dt)
 	end
 
 	self.timeElapsed = self.timeElapsed + dt
-	--print(self.timeElapsed,self.frameTime,dt)
 	local cft = self.frames[self.action].frameTime
 	if (cft ~= nil and self.timeElapsed > cft) or (cft == nil and self.timeElapsed > self.frameTime) then
 		self.timeElapsed = 0

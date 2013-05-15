@@ -23,7 +23,7 @@ function love.load()
 	for r = 1, 30 do
 		local row = {}
 		for c = 1,30 do
-			if r == 1 or c == 1 or r == 100 or c == 100 then
+			if r == 1 or c == 1 or r == 30 or c == 30 then
 				table.insert(row,1)
 			else
 				table.insert(row,2)
