@@ -19,7 +19,6 @@ function love.load()
 	misc = loadMisc()
 	units = loadUnits()
 
-<<<<<<< HEAD
 	local sm = {
 	{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
 	{3,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
@@ -59,20 +58,6 @@ function love.load()
 	-- 	end
 	-- 	table.insert(sm,row)
 	-- end
-=======
-	local sm = {}
-	for r = 1, 30 do
-		local row = {}
-		for c = 1,30 do
-			if r == 1 or c == 1 or r == 30 or c == 30 then
-				table.insert(row,1)
-			else
-				table.insert(row,2)
-			end
-		end
-		table.insert(sm,row)
-	end
->>>>>>> 881f131b55e16110a2f3324052b17d8d7300067b
 
 	map = Map:new{width = 24, height = 18, size = 32, frameDelay = .1, ox = 16, oy = 12}
 	
