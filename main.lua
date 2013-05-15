@@ -8,23 +8,25 @@ local keyboard
 local mouse
 
 function love.load()
+	mouse = {}
+	keyboard = {}
+
 	terrain = loadTerrain()
 
 	local sm = {}
-	for r = 1, 100 do
+	for r = 1, 30 do
 		local row = {}
-		for c = 1,100 do
+		for c = 1,30 do
 			if r == 1 or c == 1 or r == 100 or c == 100 then
 				table.insert(row,1)
 			else
 				table.insert(row,2)
 			end
 		end
-		print(#row)
 		table.insert(sm,row)
 	end
 
-	map = Map:new{width = 24, height = 18, size = 32}
+	map = Map:new{width = 24, height = 18, size = 32, frameDelay = .1}
 	
 	map:loadSpriteSheet(terrain)
 	map:loadSpriteMap(sm, {"grass","water"})
@@ -42,8 +44,9 @@ end
 function love.update(dt)
 	mouse.x = love.mouse.getX()
 	mouse.y = love.mouse.getY()
-	
-	terrain:update(mouse,keyboard,dt)
+
+	terrain:update(dt)
+	map:update(mouse,keyboard,dt)
 end
 
 function love.keypressed(key,unicode)
