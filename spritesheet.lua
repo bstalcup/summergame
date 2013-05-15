@@ -90,7 +90,7 @@ function loadMisc()
 						love.graphics.newQuad(32,64,32,32,1024,1024)
 				},
 				target = "default",
-				frameTime = .25
+				frameTime = .5
 			}
 		})
 	return ss
@@ -99,7 +99,7 @@ end
 
 function loadEffects()
 	local ss = SpriteSheet:new{image = love.graphics.newImage("spriteterrain.png"), frameTime=.1}
-	ss:addFrames("explosion",
+	ss:addFrames("explosion",{
 			default = {
 				frames = {
 						love.graphics.newQuad( 0, 0, 32, 32, 1024, 1024 ),
@@ -111,7 +111,8 @@ function loadEffects()
 				},
 				target= "default"
 			}
-		)
+		})
+	return ss
 end
 
 
