@@ -10,6 +10,10 @@ function SpriteSheet:new(o)
 end
 
 function SpriteSheet:addFrames(key,frames)
+	print(key)
+	for k in pairs(frames) do
+		print("\t",k,frames[k].frameTime)
+	end
 	if self.frames == nil then
 		self.frames = {}
 	end
@@ -27,26 +31,31 @@ function SpriteSheet:makeSprite(key)
 end
 
 function SpriteSheet:draw()
-	if self.batch == nil then
-		self.batch = love.graphics.newSpriteBatch(self.image)
-	end
-	self.batch:clear()
-	self.batch:bind()
-	for i,sprite in ipairs(self.sprites) do
-		if(sprite:isVisible()) then
-			self.batch:addq(sprite:getQuad(), sprite:getX(), sprite:getY())
+	if self.sprites then 
+		if self.batch == nil then
+			self.batch = love.graphics.newSpriteBatch(self.image)
 		end
+		self.batch:clear()
+		self.batch:bind()
+		for i,sprite in ipairs(self.sprites) do
+			if(sprite:isVisible()) then
+				self.batch:addq(sprite:getQuad(), sprite:getX(), sprite:getY())
+			end
+		end
+		self.batch:unbind()
+		love.graphics.draw(self.batch,0,0)
 	end
-	self.batch:unbind()
-	love.graphics.draw(self.batch,12,16)
 end
 
 function SpriteSheet:update(dt)
-	for i,sprite in ipairs(self.sprites) do
-		sprite:update(dt)
+	if self.sprites ~= nil then
+		for i,sprite in ipairs(self.sprites) do
+			sprite:update(dt)
+		end
 	end
 end
 
+--HARDCODED SPRITESHEETS INCOMING--
 
 function loadUnits()
 	local ss = SpriteSheet:new{image = love.graphics.newImage("spriteunit.png"), frameTime=.1}
@@ -59,8 +68,8 @@ function loadUnits()
 				target = "default"
 			}
 
-		}
-		)
+		})
+	return ss
 end
 
 
@@ -69,12 +78,22 @@ function loadMisc()
 	ss:addFrames("cursor",{
 			default = {
 				frames = {
-					love.graphics.newQuad(0,0,32,32,1024,1024),
-					love.graphics.newQuad(32,0,32,32,1024,1024)
-				}
-				target = "default"
+						love.graphics.newQuad(0,0,32,32,1024,1024),
+						love.graphics.newQuad(32,0,32,32,1024,1024)
+					},
+				target = "default",
+				frameTime = .5
+			},
+			click = {
+				frames = {
+						love.graphics.newQuad(0,64,32,32,1024,1024),
+						love.graphics.newQuad(32,64,32,32,1024,1024)
+				},
+				target = "default",
+				frameTime = .25
 			}
 		})
+	return ss
 end
 
 

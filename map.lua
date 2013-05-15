@@ -15,8 +15,12 @@ function Map:loadCollisionMap(col)
 	self.col = col
 end
 
-function Map:loadSpriteSheet(spritesheet)
+function Map:loadTerrainSpriteSheet(spritesheet)
 	self.spritesheet = spritesheet
+end
+
+function Map:loadMiscSpriteSheet(spritesheet)
+	self.misc = spritesheet
 end
 
 function Map:loadSpriteMap(spritemap, mapkey) 
@@ -48,7 +52,7 @@ function Map:setView(nx,ny)
 			for y,sprite in ipairs(row) do
 				if x >= nx and y >= ny and x < nx + self.width and y < ny + self.height then
 					sprite:setVisible(true)
-					sprite:setPosition((x-nx)*self.size,(y-ny)*self.size)
+					sprite:setPosition(self.ox + (x-nx)*self.size,self.oy + (y-ny)*self.size)
 				else
 					sprite:setVisible(false)
 				end
@@ -58,13 +62,28 @@ function Map:setView(nx,ny)
 end
 
 function Map:update(mouse, keyboard, dt)
+	if self.cursor == nil then
+		self.cursor = self.misc:makeSprite("cursor")
+		self.cursor:setVisible(true)
+	end
+	if mouse.x > 0 and mouse.x < 800 and mouse.y > 0 and mouse.y < 600 then
+		local cx = math.floor((mouse.x-self.ox)/self.size)*self.size + self.ox
+		local cy = math.floor((mouse.y-self.oy)/self.size)*self.size + self.oy
+
+		self.cursor:setPosition(cx,cy)
+
+	end
+	if mouse.press["l"] and not mouse.lastPress["l"] then
+		self.cursor:setAction("click")
+	end
+
 	if mouse.x < 100 or mouse.x > 700 or mouse.y < 100 or mouse.y > 500 then 
-		if self.timeElapsed == nil then
-			self.timeElapsed = 0
+		if self.scrollTime == nil then
+			self.scrollTime = 0
 		end
-		self.timeElapsed = self.timeElapsed + dt
-		if self.timeElapsed > self.frameDelay then
-			self.timeElapsed = 0
+		self.scrollTime = self.scrollTime + dt
+		if self.scrollTime > self.frameDelay then
+			self.scrollTime = 0
 
 			local dx = 0
 			local dy = 0
@@ -84,5 +103,7 @@ function Map:update(mouse, keyboard, dt)
 
 			self:setView(self.vx + dx, self.vy + dy)
 		end
+	else
+		self.scrollTime = 0
 	end
 end

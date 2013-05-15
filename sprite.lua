@@ -71,7 +71,8 @@ function Sprite:update(dt)
 
 	self.timeElapsed = self.timeElapsed + dt
 	--print(self.timeElapsed,self.frameTime,dt)
-	if self.timeElapsed > self.frameTime then
+	local cft = self.frames[self.action].frameTime
+	if (cft ~= nil and self.timeElapsed > cft) or (cft == nil and self.timeElapsed > self.frameTime) then
 		self.timeElapsed = 0
 		self.frameCount = self.frameCount + 1
 		if self.frameCount > #self.frames[self.action].frames then
