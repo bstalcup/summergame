@@ -77,11 +77,13 @@ function love.load()
 
 
 
+
+
 	map = Map:new{width = 24, height = 18, size = 32, frameDelay = .1, ox = 16, oy = 12}
 	
 	map:loadTerrainSpriteSheet(terrain)
 	map:loadMiscSpriteSheet(misc)
-	map:loadSpriteMap(level1, {"grass","water","block"})
+	map:loadSpriteMap(level1, {"tile1","tile2","tile3"})
 	map:setView(1,1)
 end
 
