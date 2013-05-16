@@ -25,9 +25,9 @@ end
 
 function Map:loadSpriteMap(spritemap, mapkey) 
 	self.spritemap = {}
-	for x,_ in ipairs(spritemap) do
+	for y,_ in ipairs(spritemap) do
 		local row = {}
-		for y,val in ipairs(_) do 
+		for x,val in ipairs(_) do 
 			local sprite = self.spritesheet:makeSprite(mapkey[val])
 			sprite:setPosition((x-1)*self.size, (y-1)*self.size)
 			table.insert(row,sprite)
@@ -38,18 +38,17 @@ function Map:loadSpriteMap(spritemap, mapkey)
 end
 
 function Map:setView(nx,ny)
-
-	if nx < -5 then nx = -5 end
-	if ny < -5 then ny = -5 end
-	if nx > #self.spritemap - self.height + 5 then nx = #self.spritemap - self.height + 5 end
-	if ny > #self.spritemap[1] - self.width + 5 then ny = #self.spritemap[1] - self.height + 5 end
+	if nx < -4 then nx = -4 end
+	if ny < -4 then ny = -4 end
+	if nx > #self.spritemap[1] - self.width + 5 then nx = #self.spritemap[1] - self.width + 5 end
+	if ny > #self.spritemap - self.height + 5 then ny = #self.spritemap - self.height + 5 end
 
 	if self.vx ~= nx or self.vy ~= ny then
 		self.vx = nx
 		self.vy = ny
 
-		for x,row in ipairs(self.spritemap) do 
-			for y,sprite in ipairs(row) do
+		for y,row in ipairs(self.spritemap) do 
+			for x,sprite in ipairs(row) do
 				if x >= nx and y >= ny and x < nx + self.width and y < ny + self.height then
 					sprite:setVisible(true)
 					sprite:setPosition(self.ox + (x-nx)*self.size,self.oy + (y-ny)*self.size)

@@ -50,7 +50,6 @@ function Sprite:isVisible()
 end
 
 function Sprite:getQuad()
-	print(self.action, self.frameCount)
 	if self.action == nil then
 		self.action = "default"
 	end
