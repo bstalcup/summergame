@@ -90,7 +90,7 @@ function loadMisc()
 						love.graphics.newQuad(32,64,32,32,1024,1024)
 				},
 				target = "default",
-				frameTime = .5
+				frameTime = .25
 			}
 		})
 	return ss

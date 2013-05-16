@@ -25,9 +25,9 @@ end
 
 function Map:loadSpriteMap(spritemap, mapkey) 
 	self.spritemap = {}
-	for x,_ in ipairs(spritemap) do
+	for y,_ in ipairs(spritemap) do
 		local row = {}
-		for y,val in ipairs(_) do 
+		for x,val in ipairs(_) do 
 			local sprite = self.spritesheet:makeSprite(mapkey[val])
 			sprite:setPosition((x-1)*self.size, (y-1)*self.size)
 			table.insert(row,sprite)
@@ -38,18 +38,17 @@ function Map:loadSpriteMap(spritemap, mapkey)
 end
 
 function Map:setView(nx,ny)
-
-	if nx < -5 then nx = -5 end
-	if ny < -5 then ny = -5 end
-	if nx > #self.spritemap - self.height + 5 then nx = #self.spritemap - self.height + 5 end
-	if ny > #self.spritemap[1] - self.width + 5 then ny = #self.spritemap[1] - self.height + 5 end
+	if nx < -4 then nx = -4 end
+	if ny < -4 then ny = -4 end
+	if nx > #self.spritemap[1] - self.width + 5 then nx = #self.spritemap[1] - self.width + 5 end
+	if ny > #self.spritemap - self.height + 5 then ny = #self.spritemap - self.height + 5 end
 
 	if self.vx ~= nx or self.vy ~= ny then
 		self.vx = nx
 		self.vy = ny
 
-		for x,row in ipairs(self.spritemap) do 
-			for y,sprite in ipairs(row) do
+		for y,row in ipairs(self.spritemap) do 
+			for x,sprite in ipairs(row) do
 				if x >= nx and y >= ny and x < nx + self.width and y < ny + self.height then
 					sprite:setVisible(true)
 					sprite:setPosition(self.ox + (x-nx)*self.size,self.oy + (y-ny)*self.size)
@@ -60,6 +59,81 @@ function Map:setView(nx,ny)
 		end
 	end
 end
+
+function Map:findPath(ax,ay,bx,by) 
+	local start = {x=ax,y=ay}
+	local goal  = {x=bx,y=by}
+
+	local print_path = function(a) 
+		for i,point in ipairs(a) do
+			print(i,point.x,point.y)
+		end
+	end
+
+	local adj = function(path)
+		local point = path[#path] 
+		local check = {{x=point.x+1,y=point.y},{x=point.x-1,y=point.y},{x=point.x,y=point.y+1},{x=point.x,y=point.y-1}}
+		local ret = {}
+
+		local contains = function(p)
+			for i,a in ipairs(path) do 
+				if a.x == p.x and a.y == p.y then
+					return true
+				end
+			end
+			return false
+		end
+
+		for i,c in ipairs(check) do
+			if c.x > 0 and c.x <= self.width and c.y > 0 and c.y <= self.height then
+				if self.col == nil or self.col[c.y][c.x] then
+					if not contains(c) then
+						table.insert(ret,c)
+					end
+				end
+			end
+		end
+		return ret
+	end
+	local copy = function(array,point)
+		local a = {}
+		for i,val in ipairs(array) do
+			table.insert(a,val)
+		end
+		table.insert(a,point)
+		return a
+	end
+	local distance = function(a,b)
+		if a == nil or b == nil then return 0 end 
+		return math.sqrt((a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y))
+	end
+
+	local q = {}
+	local n = {start}
+	while n[#n].x ~= goal.x and n[#n].x ~= goal.x do
+		print_path(n)
+		for i,point in ipairs(adj(n)) do
+			print(point)
+			table.insert(q,copy(n,point))
+		end
+		table.sort(q,function(patha,pathb)
+			print_path(patha)
+			print_path(pathb)
+			local adist = 0
+			local bdist = 0
+			for i = 2,#patha do
+				adist = adist + distance(patha[i-1],patha[i])
+			end
+			for i = 2,#pathb do 
+				bdist = bdist + distance(pathb[i-1],patha[i])
+			end
+			return adist < bdist
+		end)
+		n = table.remove(q)
+	end
+	return n
+end
+
 
 function Map:update(mouse, keyboard, dt)
 	if self.cursor == nil then
