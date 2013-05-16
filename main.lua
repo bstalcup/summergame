@@ -83,8 +83,6 @@ function love.load()
 	map:loadMiscSpriteSheet(misc)
 	map:loadSpriteMap(level1, {"grass","water","block"})
 	map:setView(1,1)
-
-	local path = map:findPath(1,1,10,10)
 end
 
 function love.draw()
