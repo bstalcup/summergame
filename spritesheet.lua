@@ -140,13 +140,28 @@ function loadTerrain()
 				target = "default"
 				}
 			})
+	ss:addFrames("water", {
+			default={
+				frames = {
+						love.graphics.newQuad( 96, 0, 32, 32, 1024, 1024 )
+						
+				},
+				target = "default"
+			}
+			
+		})
 	ss:addFrames("tile3", {
 			default={
 				frames = {
 						love.graphics.newQuad( 64, 0, 32, 32, 1024, 1024 )
-				}
+						
+				},
+				target = "default"
 			}
+
 		})
+
+
 	return ss
 end
 		
