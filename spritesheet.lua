@@ -49,8 +49,15 @@ end
 
 function SpriteSheet:update(dt)
 	if self.sprites ~= nil then
+		local remove = {}
 		for i,sprite in ipairs(self.sprites) do
+			if sprite.toBeRemoved then
+				table.insert(remove,1,i)
+			end
 			sprite:update(dt)
+		end
+		for i,val in ipairs(remove) do
+			table.remove(self.sprites,val)
 		end
 	end
 end
@@ -98,7 +105,7 @@ end
 
 
 function loadEffects()
-	local ss = SpriteSheet:new{image = love.graphics.newImage("spriteterrain.png"), frameTime=.1}
+	local ss = SpriteSheet:new{image = love.graphics.newImage("spritemap.png"), frameTime=.1}
 	ss:addFrames("explosion",{
 			default = {
 				frames = {
@@ -117,7 +124,7 @@ end
 
 
 function loadTerrain()
-	local ss = SpriteSheet:new{image = love.graphics.newImage("spriteterrain.png"), frameTime=.1}
+	local ss = SpriteSheet:new{image = love.graphics.newImage("spritemap.png"), frameTime=.1}
 	ss:addFrames("tile1",{
 			default = {
 				frames = {

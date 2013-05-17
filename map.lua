@@ -1,4 +1,4 @@
-require "astar.lua"
+require "path"
 
 Map = {}
 
@@ -10,7 +10,6 @@ function Map:new(o)
 	local m = o or {}
 	setmetatable(m,Map)
 	self.__index = self
-
 
 	return m
 end
@@ -34,7 +33,6 @@ function Map:loadSpriteMap(spritemap, mapkey)
 		for x,val in ipairs(_) do 
 			print(mapkey[val])
 			local sprite = self.spritesheet:makeSprite(mapkey[val])
-			sprite:setPosition((x-1)*self.size, (y-1)*self.size)
 			table.insert(row,sprite)
 		end
 		table.insert(self.spritemap,row)
@@ -71,17 +69,60 @@ function Map:update(mouse, keyboard, dt)
 		self.cursor = self.misc:makeSprite("cursor")
 		self.cursor:setVisible(true)
 	end
+	if mouse.press["l"] and not mouse.lastPress["l"] then
+		self.cursor:setAction("click")
+		if self.arrows == nil then
+			self.arrows = {}
+		else
+			for k in pairs(self.arrows) do
+				self.arrows[k]:setVisible(false)
+				self.arrows[k]:remove()
+				self.arrows[k] = nil
+			end
+			self.arrows = nil
+		end
+	end
 	if mouse.x > 0 and mouse.x < 800 and mouse.y > 0 and mouse.y < 600 then
 		local cx = math.floor((mouse.x-self.ox)/self.size)*self.size + self.ox
 		local cy = math.floor((mouse.y-self.oy)/self.size)*self.size + self.oy
 
 		self.cursor:setPosition(cx,cy)
+		if self.arrows ~= nil then
+			local mx = math.floor((cx-self.ox)/self.size)
+			local my = math.floor((cy-self.oy)/self.size)
 
-	end
-	if mouse.press["l"] and not mouse.lastPress["l"] then
-		self.cursor:setAction("click")
-	end
+			if self.arrows[#self.arrows] ~= nil then
+				local last = self.arrows[#self.arrows]
 
+				if rx ~= last:getX() or ry ~= last:getY() then
+
+					local sax = self.arrows[1]:getX()
+					local say = self.arrows[1]:getY()
+
+					local sx = math.floor((sax-self.ox)/self.size)
+					local sy = math.floor((say-self.oy)/self.size)
+
+					for k in pairs(self.arrows) do
+						self.arrows[k]:setVisible(false)
+						self.arrows[k]:remove()
+						self.arrows[k] = nil 
+					end 
+
+					local path = astar.ucs(astar.mpoint(sx,sy),astar.mpoint(mx,my)) 
+					for i,node in ipairs(path) do
+						local head = self.misc:makeSprite("cursor")
+						head:setPosition(node.x*self.size + self.ox,node.y*self.size + self.oy)
+						head:setVisible(true)
+						table.insert(self.arrows,head)
+					end
+				end
+			else
+				local head = self.misc:makeSprite("cursor")
+				head:setPosition(cx,cy)
+				table.insert(self.arrows,head)
+			end
+		end
+	end
 	if mouse.x < 100 or mouse.x > 700 or mouse.y < 100 or mouse.y > 500 then 
 		if self.scrollTime == nil then
 			self.scrollTime = 0

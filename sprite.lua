@@ -59,6 +59,10 @@ function Sprite:getQuad()
 	return self.frames[self.action].frames[self.frameCount]
 end
 
+function Sprite:remove()
+	self.toBeRemoved = true
+end
+
 function Sprite:update(dt)
 	if self.frameCount == nil then
 		self.frameCount = 1
