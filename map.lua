@@ -1,3 +1,5 @@
+require "astar.lua"
+
 Map = {}
 
 --self.size is tile size in pixels
@@ -8,6 +10,8 @@ function Map:new(o)
 	local m = o or {}
 	setmetatable(m,Map)
 	self.__index = self
+
+
 	return m
 end
 
@@ -34,7 +38,8 @@ function Map:loadSpriteMap(spritemap, mapkey)
 		end
 		table.insert(self.spritemap,row)
 	end
-	self:setView(1,10)
+	astar.setBounds(0,0,#spritemap[1],#spritemap)
+	self:setView(1,1)
 end
 
 function Map:setView(nx,ny)
