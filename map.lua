@@ -32,6 +32,7 @@ function Map:loadSpriteMap(spritemap, mapkey)
 	for y,_ in ipairs(spritemap) do
 		local row = {}
 		for x,val in ipairs(_) do 
+			print(mapkey[val])
 			local sprite = self.spritesheet:makeSprite(mapkey[val])
 			sprite:setPosition((x-1)*self.size, (y-1)*self.size)
 			table.insert(row,sprite)

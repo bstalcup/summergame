@@ -79,15 +79,15 @@ function loadMisc()
 			default = {
 				frames = {
 						love.graphics.newQuad(0,0,32,32,1024,1024),
-						love.graphics.newQuad(32,0,32,32,1024,1024)
+						love.graphics.newQuad(0,32,32,32,1024,1024)
 					},
 				target = "default",
 				frameTime = .5
 			},
 			click = {
 				frames = {
-						love.graphics.newQuad(0,64,32,32,1024,1024),
-						love.graphics.newQuad(32,64,32,32,1024,1024)
+						love.graphics.newQuad(64,0,32,32,1024,1024),
+						love.graphics.newQuad(64,32,32,32,1024,1024)
 				},
 				target = "default",
 				frameTime = .25
@@ -118,15 +118,10 @@ end
 
 function loadTerrain()
 	local ss = SpriteSheet:new{image = love.graphics.newImage("spriteterrain.png"), frameTime=.1}
-	ss:addFrames("grass",{
+	ss:addFrames("tile1",{
 			default = {
 				frames = {
-						love.graphics.newQuad( 0, 0, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 0, 32, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 0, 64, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 0, 96, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 0, 128, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 0, 160, 32, 32, 1024, 1024 )
+						love.graphics.newQuad( 0, 0, 32, 32, 1024, 1024 )
 					},
 				target = "default"
 			}
@@ -137,32 +132,36 @@ function loadTerrain()
 
 		}
 		)
-	ss:addFrames("water",{
+	ss:addFrames("tile2",{
 			default={
 				frames = {
-						love.graphics.newQuad( 32, 0, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 32, 32, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 32, 64, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 32, 96, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 32, 128, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 32, 160, 32, 32, 1024, 1024 )
+						love.graphics.newQuad( 32, 0, 32, 32, 1024, 1024 )
 					},
 				target = "default"
 				}
 			})
-	ss:addFrames("block", {
+	ss:addFrames("water", {
 			default={
 				frames = {
-						love.graphics.newQuad( 64, 0, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 64, 32, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 64, 64, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 64, 96, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 64, 128, 32, 32, 1024, 1024 ),
-						love.graphics.newQuad( 64, 160, 32, 32, 1024, 1024 )
-
-				}
+						love.graphics.newQuad( 96, 0, 32, 32, 1024, 1024 )
+						
+				},
+				target = "default"
 			}
+			
 		})
+	ss:addFrames("tile3", {
+			default={
+				frames = {
+						love.graphics.newQuad( 64, 0, 32, 32, 1024, 1024 )
+						
+				},
+				target = "default"
+			}
+
+		})
+
+
 	return ss
 end
 		
