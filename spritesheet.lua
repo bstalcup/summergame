@@ -85,20 +85,109 @@ function loadMisc()
 	ss:addFrames("cursor",{
 			default = {
 				frames = {
-						love.graphics.newQuad(0,0,32,32,1024,1024),
-						love.graphics.newQuad(0,32,32,32,1024,1024)
+						love.graphics.newQuad(224,0,32,32,1024,1024),
+						love.graphics.newQuad(224,32,32,32,1024,1024)
 					},
 				target = "default",
 				frameTime = .5
 			},
 			click = {
 				frames = {
-						love.graphics.newQuad(64,0,32,32,1024,1024),
-						love.graphics.newQuad(64,32,32,32,1024,1024)
+						love.graphics.newQuad(0,0,32,32,1024,1024)
 				},
 				target = "default",
 				frameTime = .25
 			}
+		})
+	ss:addFrames("up",{
+			default = {
+				frames = {
+						love.graphics.newQuad(256,0,32,32,1024,1024)
+					},
+				target = "default"
+			}
+
+		})
+	ss:addFrames("right",{
+			default = {
+				frames = {
+						love.graphics.newQuad(288,0,32,32,1024,1024)
+					},
+				target = "default"
+			}
+
+		})
+	ss:addFrames("down",{
+			default = {
+				frames = {
+						love.graphics.newQuad(320,0,32,32,1024,1024)
+					},
+				target = "default"
+			}
+
+		})
+	ss:addFrames("left",{
+			default = {
+				frames = {
+						love.graphics.newQuad(352,0,32,32,1024,1024)
+					},
+				target = "default"
+			}
+
+		})
+	ss:addFrames("hbar",{
+			default = {
+				frames = {
+						love.graphics.newQuad(384,0,32,32,1024,1024)
+					},
+				target = "default"
+			}
+
+		})
+	ss:addFrames("vbar",{
+			default = {
+				frames = {
+						love.graphics.newQuad(416,0,32,32,1024,1024)
+					},
+				target = "default"
+			}
+
+		})
+	ss:addFrames("tr",{
+			default = {
+				frames = {
+						love.graphics.newQuad(448,0,32,32,1024,1024)
+					},
+				target = "default"
+			}
+
+		})
+	ss:addFrames("br",{
+			default = {
+				frames = {
+						love.graphics.newQuad(480,0,32,32,1024,1024)
+					},
+				target = "default"
+			}
+
+		})
+	ss:addFrames("bl",{
+			default = {
+				frames = {
+						love.graphics.newQuad(512,0,32,32,1024,1024)
+					},
+				target = "default"
+			}
+
+		})
+	ss:addFrames("tl",{
+			default = {
+				frames = {
+						love.graphics.newQuad(544,0,32,32,1024,1024)
+					},
+				target = "default"
+			}
+
 		})
 	return ss
 end
